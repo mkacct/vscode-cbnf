@@ -1,0 +1,139 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "cBNF",
+	"scopeName": "source.cbnf",
+	"patterns": [
+		{"include": "#comment"},
+		{"include": "#rule-token"}
+	],
+	"repository": {
+		"qty": {
+			"name": "constant.numeric.quantity.cbnf",
+			"match": "\\d+"
+		},
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.cbnf",
+					"match": "//.*$"
+				},
+				{
+					"name": "comment.block.cbnf",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		},
+		"rule-token": {
+			"patterns": [
+				{"include": "#literal"},
+				{"include": "#desc-term"},
+				{"include": "#identifier"},
+				{"include": "#quantification"},
+				{"include": "#group"},
+				{"include": "#quantifier"},
+				{
+					"name": "keyword.operator.assignment.cbnf",
+					"match": "::=\\|?"
+				},
+				{
+					"name": "keyword.operator.alternation.cbnf",
+					"match": "\\|"
+				},
+				{
+					"name": "keyword.operator.exception.cbnf",
+					"match": "\\-"
+				},
+				{
+					"name": "punctuation.terminator.rule.cbnf",
+					"match": ";"
+				}
+			]
+		},
+		"literal": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.cbnf",
+					"begin": "\"",
+					"end": "\"|$",
+					"patterns": [
+						{"include": "#literal-escape-seq"}
+					]
+				},
+				{
+					"name": "string.quoted.single.cbnf",
+					"begin": "'",
+					"end": "'|$",
+					"patterns": [
+						{"include": "#literal-escape-seq"}
+					]
+				}
+			]
+		},
+		"literal-escape-seq": {
+			"name": "constant.character.escape.cbnf",
+			"match": "\\\\(?:\\d{1,3}|x(?<hex>[\\da-fA-F])+|u\\g<hex>{1,4}|U\\g<hex>{1,8}|.)?"
+		},
+		"identifier": {
+			"name": "meta.identifier.cbnf",
+			"match": "<([^<>]*)>",
+			"captures": {"1": {"name": "variable.other.nonterminal.cbnf"}}
+		},
+		"group": {
+			"name": "meta.group.cbnf",
+			"begin": "(\\()",
+			"end": "(\\))",
+			"captures": {"1": {"name": "punctuation.definition.group.cbnf"}},
+			"patterns": [
+				{"include": "$self"}
+			]
+		},
+		"quantification": {
+			"name": "meta.group.quantification.cbnf",
+			"begin": "({)",
+			"end": "(})",
+			"captures": {"1": {"name": "punctuation.definition.group.quantification.cbnf"}},
+			"patterns": [
+				{"include": "$self"}
+			]
+		},
+		"quantifier": {
+			"patterns": [
+				{
+					"name": "keyword.operator.quantifier.cbnf",
+					"match": "\\?|\\*|\\+"
+				},
+				{
+					"name": "keyword.operator.quantifier.cbnf",
+					"begin": "(\\[)",
+					"end": "(\\])",
+					"captures": {"1": {"name": "punctuation.definition.quantifier.numeric.cbnf"}},
+					"patterns": [
+						{"include": "#comment"},
+						{"include": "#qty"},
+						{
+							"name": "punctuation.separator.quantifier.numeric.cbnf",
+							"match": ","
+						},
+						{
+							"name": "invalid.illegal",
+							"match": "\\S"
+						}
+					]
+				}
+			]
+		},
+		"desc-term": {
+			"name": "string.other.description.cbnf",
+			"begin": "(\\(\\?)",
+			"end": "(\\?\\))",
+			"captures": {"1": {"name": "punctuation.definition.description.cbnf"}},
+			"patterns": [
+				{
+					"name": "invalid.illegal",
+					"match": "\\(\\?|\\)\\?"
+				}
+			]
+		}
+	}
+}
