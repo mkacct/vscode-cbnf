@@ -72,7 +72,7 @@
 		},
 		"literal-escape-seq": {
 			"name": "constant.character.escape.cbnf",
-			"match": "\\\\(?:\\d{1,3}|x(?<hex>[\\da-fA-F])+|u\\g<hex>{1,4}|U\\g<hex>{1,8}|.)?"
+			"match": "\\\\(?:[0-7]{1,3}|x(?<hex>[\\da-fA-F])+|u\\g<hex>{1,4}|U\\g<hex>{1,8}|.)?"
 		},
 		"identifier": {
 			"name": "meta.identifier.cbnf",
