@@ -124,7 +124,7 @@
 			]
 		},
 		"desc-term": {
-			"name": "string.other.description.cbnf",
+			"name": "support.constant.description.cbnf",
 			"begin": "(\\(\\?)",
 			"end": "(\\?\\))",
 			"captures": {"1": {"name": "punctuation.definition.description.cbnf"}},
