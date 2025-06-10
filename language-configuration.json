@@ -30,5 +30,15 @@
 		["{", "}"],
 		["[", "]"],
 		["(?", "?)"]
+	],
+	"onEnterRules": [
+		{ // Add // when pressing enter from inside line comment
+			"beforeText": "\/\/.*",
+			"afterText": "^(?!\\s*$).+",
+			"action": {
+				"indent": "none",
+				"appendText": "// "
+			}
+		},
 	]
 }
